@@ -1,11 +1,176 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Syahreza — Developer">
+  <Navbar />
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <p class="eyebrow">
+          BACKEND / SOFTWARE DEVELOPER
+        </p>
+
+        <h1>
+          I like building systems
+          <span>that actually do something.</span>
+        </h1>
+
+        <p class="hero-description">
+          I build APIs, backend systems, and software projects
+          while learning how things work underneath.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="primary-button">
+            View my work
+          </a>
+
+          <a href="#about" class="secondary-link">
+            More about me →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container section">
+        <p class="section-label">01 / ABOUT</p>
+
+        <h2>
+          Still learning.
+          Still building.
+        </h2>
+
+        <p>
+          I enjoy understanding how software works from the inside,
+          especially backend systems, APIs, databases, and the
+          problems around them.
+        </p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container section">
+        <p class="section-label">02 / PROJECTS</p>
+
+        <h2>Things I've built.</h2>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container section">
+        <p class="section-label">03 / CONTACT</p>
+
+        <h2>Let's build something.</h2>
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<style>
+  .hero {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    padding: 80px 0 120px;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+  }
+
+  .eyebrow,
+  .section-label {
+    font-family: var(--font-mono);
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  h1 {
+    max-width: 850px;
+    margin-top: 20px;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.07em;
+    font-weight: 600;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--muted);
+  }
+
+  .hero-description {
+    max-width: 560px;
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .primary-button {
+    display: inline-flex;
+    padding: 13px 18px;
+    background: var(--foreground);
+    color: var(--background);
+    font-size: 0.9rem;
+    transition:
+      transform 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .primary-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.85;
+  }
+
+  .secondary-link {
+    font-size: 0.9rem;
+  }
+
+  .section {
+    padding: 140px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section h2 {
+    max-width: 700px;
+    margin-top: 20px;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.06em;
+  }
+
+  .section > p:last-child {
+    max-width: 600px;
+    margin-top: 30px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      min-height: auto;
+      padding: 100px 0;
+    }
+
+    .hero-actions {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .section {
+      padding: 100px 0;
+    }
+  }
+</style>
