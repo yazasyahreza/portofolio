@@ -1,0 +1,119 @@
+---
+import type { ExperienceItem as ExperienceItemType } from '../data/types';
+import ReadMore from './ReadMore.astro';
+import MediaGrid from './MediaGrid.astro';
+import { resolveImageUrl } from '../lib/media';
+
+interface Props {
+  item: ExperienceItemType;
+}
+
+const { item } = Astro.props;
+
+function formatDate(dateStr: string) {
+  const [year, month] = dateStr.split('-');
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  return `${months[parseInt(month, 10) - 1]} ${year}`;
+}
+---
+
+<div class="exp-item">
+  <img src={resolveImageUrl(item.logoUrl)} alt={item.organization} class="exp-item__logo" />
+
+  <div class="exp-item__content">
+    <h3 class="exp-item__position">{item.position}</h3>
+    <p class="exp-item__org">{item.organization}</p>
+    <p class="exp-item__date">
+      {formatDate(item.startDate)} — {item.isCurrent ? 'Sekarang' : item.endDate ? formatDate(item.endDate) : ''}
+    </p>
+    <p class="exp-item__location">{item.location}</p>
+
+    <div class="exp-item__description">
+      <ReadMore text={item.description} />
+    </div>
+
+    {item.media.length > 0 && (
+      <div class="exp-item__media">
+        <MediaGrid media={item.media} />
+      </div>
+    )}
+
+    {item.skills.length > 0 && (
+      <ul class="exp-item__skills">
+        {item.skills.map((s) => <li>{s}</li>)}
+      </ul>
+    )}
+  </div>
+</div>
+
+<style>
+  .exp-item {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: flex-start;
+  }
+
+  .exp-item + .exp-item {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .exp-item__logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .exp-item__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .exp-item__position {
+    font-size: var(--text-subtitle);
+    font-weight: 500;
+  }
+
+  .exp-item__org {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  .exp-item__date,
+  .exp-item__location {
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+  }
+
+  .exp-item__description {
+    margin-top: var(--space-md);
+  }
+
+  .exp-item__media {
+    margin-top: var(--space-lg);
+  }
+
+  .exp-item__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-lg);
+  }
+
+  .exp-item__skills li {
+    font-size: var(--text-caption);
+    padding: 4px 10px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text-secondary);
+  }
+</style>

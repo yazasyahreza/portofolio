@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Cover from '../components/Cover.astro';
+import { getContent } from '../data/store';
+import { resolveImageUrl } from '../lib/media';
+
+const { identity, projects } = await getContent();
+
+const sortedProjects = [...projects].sort(
+  (a, b) => b.builtDate.localeCompare(a.builtDate)
+);
+---
+
+<BaseLayout title={`Projects — ${identity.name}`}>
+  <Cover src={resolveImageUrl(identity.coverImageUrl)} />
+  
+  <div class="projects-page">
+    <a href="/" class="projects-page__back">← Kembali</a>
+    <h1 class="projects-page__heading">All Projects</h1>
+
+    <div class="projects-page__list">
+      {sortedProjects.map((project) => (
+        <div class="projects-page__item">
+          <ProjectCard project={project} />
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .projects-page {
+    padding: var(--space-xl);
+  }
+
+  .projects-page__back {
+    display: inline-block;
+    font-size: var(--text-caption);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    margin-bottom: var(--space-lg);
+  }
+
+  .projects-page__heading {
+    font-size: var(--text-heading-lg);
+    font-weight: 500;
+    margin-bottom: var(--space-xl);
+  }
+
+  .projects-page__item + .projects-page__item {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--color-border);
+  }
+</style>

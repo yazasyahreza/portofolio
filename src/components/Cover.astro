@@ -1,0 +1,26 @@
+---
+interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<img src={src} alt="" class="cover" />
+
+<style>
+  .cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: var(--color-border);
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+  .cover {
+    width: calc(100% + 32px);
+    margin-left: -16px;
+  }
+}
+</style>

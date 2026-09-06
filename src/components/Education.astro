@@ -1,0 +1,33 @@
+---
+import type { EducationItem as EducationItemType } from '../data/types';
+import EducationItem from './EducationItem.astro';
+
+interface Props {
+  items: EducationItemType[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="education">
+  <h2 class="education__heading">Education</h2>
+  <div class="education__list">
+    {items.map((item) => (
+      <EducationItem item={item} />
+    ))}
+  </div>
+</section>
+
+<style>
+  .education {
+    padding-inline: var(--space-xl);
+    padding-block: var(--space-3xl);
+    border-top: 1px solid var(--color-border-strong);
+  }
+
+  .education__heading {
+    font-size: var(--text-heading-sm);
+    font-weight: 500;
+    margin-bottom: var(--space-xl);
+  }
+</style>

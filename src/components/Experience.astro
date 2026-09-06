@@ -1,0 +1,33 @@
+---
+import type { ExperienceItem as ExperienceItemType } from '../data/types';
+import ExperienceItem from './ExperienceItem.astro';
+
+interface Props {
+  items: ExperienceItemType[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="experience">
+  <h2 class="experience__heading">Experience</h2>
+  <div class="experience__timeline">
+    {items.map((item) => (
+      <ExperienceItem item={item} />
+    ))}
+  </div>
+</section>
+
+<style>
+  .experience {
+    padding-inline: var(--space-xl);
+    padding-block: var(--space-3xl);
+    border-top: 1px solid var(--color-border-strong);
+  }
+
+  .experience__heading {
+    font-size: var(--text-heading-sm);
+    font-weight: 500;
+    margin-bottom: var(--space-xl);
+  }
+</style>

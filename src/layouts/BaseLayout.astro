@@ -1,0 +1,379 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="id" transition:animate="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="page-bg" transition:persist></div>
+    <div class="page-loader" transition:persist>
+      <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+      <slot />
+      <Footer />
+    </div>
+
+    <div id="lightbox" class="lightbox" hidden>
+      <div class="lightbox__backdrop" data-lightbox-close></div>
+      <div class="lightbox__card">
+        <div class="lightbox__header">
+          <p class="lightbox__header-title">Media</p>
+          <button type="button" class="lightbox__close" data-lightbox-close aria-label="Tutup">✕</button>
+        </div>
+
+        <div class="lightbox__body">
+          <div class="lightbox__image-wrap">
+            <img id="lightbox-image" class="lightbox__image" src="" alt="" />
+          </div>
+          <div class="lightbox__text">
+            <p id="lightbox-title" class="lightbox__title"></p>
+            <p id="lightbox-desc" class="lightbox__desc"></p>
+            <a id="lightbox-github" class="lightbox__github" href="#" target="_blank" rel="noopener noreferrer" hidden>Lihat di GitHub →</a>
+          </div>
+        </div>
+
+        <div class="lightbox__nav">
+          <button type="button" class="lightbox__nav-btn" data-lightbox-prev>← Sebelumnya</button>
+          <button type="button" class="lightbox__nav-btn" data-lightbox-next>Selanjutnya →</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .container {
+    width: 100%;
+    padding-inline: var(--space-lg);
+    background: var(--color-bg);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+  }
+
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .lightbox__card {
+    position: relative;
+    background: var(--color-bg);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 720px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .lightbox__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .lightbox__header-title {
+    font-size: var(--text-subtitle);
+    font-weight: 500;
+  }
+
+  .lightbox__close {
+    all: unset;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+  }
+
+  .lightbox__body {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .lightbox__image-wrap {
+    background: var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox__image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 50vh;
+    margin: 0 auto;
+  }
+
+  .lightbox__text {
+    padding: var(--space-lg);
+  }
+
+  .lightbox__title {
+    font-size: var(--text-subtitle);
+    font-weight: 500;
+  }
+
+  .lightbox__desc {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-sm);
+    line-height: 1.7;
+  }
+
+  .lightbox__github {
+    display: inline-block;
+    margin-top: var(--space-md);
+    font-size: var(--text-caption);
+    color: var(--color-text-primary);
+    text-decoration: underline;
+  }
+
+  .lightbox__github[hidden] {
+    display: none;
+  }
+
+  .lightbox__nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .lightbox__nav-btn {
+    all: unset;
+    cursor: pointer;
+    font-size: var(--text-caption);
+    color: var(--color-text-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 600px;
+      margin-inline: auto;
+      margin-block: var(--space-3xl);
+      padding-inline: 0;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    
+    .lightbox__body {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .lightbox__image-wrap {
+      flex: 0 1 auto;
+      max-width: 55%;
+    }
+
+    .lightbox__image {
+      max-height: 70vh;
+    }
+
+    .lightbox__text {
+      flex: 1;
+      min-width: 240px;
+      overflow-y: auto;
+    }
+  }
+
+  .page-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: url('/images/bg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .page-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.75);
+  }
+
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  html.is-navigating .page-loader {
+    opacity: 1;
+  }
+
+  html.is-navigating .container {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .container {
+    transition: opacity 0.25s ease;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: var(--color-text-primary);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  let currentMediaGroup: { imageUrl: string; title: string; description: string; githubUrl?: string }[] = [];
+  let currentIndex = 0;
+
+  function renderLightbox() {
+    const item = currentMediaGroup[currentIndex];
+    if (!item) return;
+
+    (document.getElementById('lightbox-image') as HTMLImageElement).src = item.imageUrl;
+    (document.getElementById('lightbox-image') as HTMLImageElement).alt = item.title;
+    (document.getElementById('lightbox-title') as HTMLElement).textContent = item.title;
+    (document.getElementById('lightbox-desc') as HTMLElement).textContent = item.description;
+
+    const githubEl = document.getElementById('lightbox-github') as HTMLAnchorElement;
+    if (item.githubUrl) {
+      githubEl.href = item.githubUrl;
+      githubEl.hidden = false;
+    } else {
+      githubEl.href = '#';
+      githubEl.hidden = true;
+    }
+
+    const navEl = document.querySelector('.lightbox__nav') as HTMLElement;
+    navEl.hidden = currentMediaGroup.length <= 1;
+  }
+
+  function openLightbox(group: typeof currentMediaGroup, index: number) {
+    currentMediaGroup = group;
+    currentIndex = index;
+    renderLightbox();
+    (document.getElementById('lightbox') as HTMLElement).hidden = false;
+  }
+
+  let navStart = 0;
+  let hideTimeout: ReturnType<typeof setTimeout> | null = null;
+  const MIN_LOADER_MS = 3000;
+
+  document.addEventListener('astro:before-preparation', () => {
+    navStart = Date.now();
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    document.documentElement.classList.add('is-navigating');
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    const elapsed = Date.now() - navStart;
+    const remaining = Math.max(0, MIN_LOADER_MS - elapsed);
+
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+    }
+
+    hideTimeout = setTimeout(() => {
+      document.documentElement.classList.remove('is-navigating');
+      hideTimeout = null;
+    }, remaining);
+  });
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+
+    const readMoreBtn = target.closest('[data-readmore-toggle]');
+    if (readMoreBtn) {
+      const wrapper = readMoreBtn.closest('.readmore');
+      if (wrapper) {
+        const expanded = wrapper.classList.toggle('is-expanded');
+        readMoreBtn.textContent = expanded ? 'Tutup' : '... lainnya';
+      }
+      return;
+    }
+
+    const mediaBtn = target.closest('[data-media-open]');
+    if (mediaBtn) {
+      const groupEl = mediaBtn.closest('[data-media-group]');
+      const index = parseInt(mediaBtn.getAttribute('data-media-index') || '0', 10);
+      if (groupEl) {
+        const group = JSON.parse(groupEl.getAttribute('data-media-group') || '[]');
+        openLightbox(group, index);
+      }
+      return;
+    }
+
+    if (target.closest('[data-lightbox-next]')) {
+      currentIndex = (currentIndex + 1) % currentMediaGroup.length;
+      renderLightbox();
+      return;
+    }
+
+    if (target.closest('[data-lightbox-prev]')) {
+      currentIndex = (currentIndex - 1 + currentMediaGroup.length) % currentMediaGroup.length;
+      renderLightbox();
+      return;
+    }
+
+    if (target.closest('[data-lightbox-close]')) {
+      (document.getElementById('lightbox') as HTMLElement).hidden = true;
+    }
+  });
+</script>

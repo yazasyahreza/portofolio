@@ -1,0 +1,162 @@
+---
+import type { MediaItem } from '../data/types';
+import { resolveImageUrl } from '../lib/media';
+
+interface Props {
+  media: MediaItem[];
+}
+
+const { media: rawMedia } = Astro.props;
+const media = rawMedia.map((item) => ({
+  ...item,
+  imageUrl: resolveImageUrl(item.imageUrl),
+}));
+const isSingle = media.length === 1;
+
+const desktopVisible = media.length > 4 ? media.slice(0, 3) : media;
+const desktopRemainder = media.length > 4 ? media.length - 3 : 0;
+
+const mobileVisible = media.length > 3 ? media.slice(0, 2) : media;
+const mobileRemainder = media.length > 3 ? media.length - 2 : 0;
+
+const mediaJson = JSON.stringify(media);
+---
+
+<div class="media-grid" data-media-group={mediaJson}>
+  {isSingle ? (
+    <button type="button" class="media-grid__single" data-media-open data-media-index="0">
+      <img src={resolveImageUrl(media[0].imageUrl)} alt={media[0].title} class="media-grid__single-img" />
+      <div class="media-grid__single-text">
+        <p class="media-grid__title">{media[0].title}</p>
+        <p class="media-grid__desc">{media[0].description}</p>
+      </div>
+    </button>
+  ) : (
+    <>
+      <div class="media-grid__row media-grid__row--desktop">
+        {desktopVisible.map((m, i) => (
+          <button type="button" class="media-grid__thumb" data-media-open data-media-index={i}>
+            <img src={resolveImageUrl(m.imageUrl)} alt={m.title} />
+            {desktopRemainder > 0 && i === desktopVisible.length - 1 && (
+              <span class="media-grid__overlay">+{desktopRemainder}</span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      <div class="media-grid__row media-grid__row--mobile">
+        {mobileVisible.map((m, i) => (
+          <button type="button" class="media-grid__thumb" data-media-open data-media-index={i}>
+            <img src={resolveImageUrl(m.imageUrl)} alt={m.title} />
+            {mobileRemainder > 0 && i === mobileVisible.length - 1 && (
+              <span class="media-grid__overlay">+{mobileRemainder}</span>
+            )}
+          </button>
+        ))}
+      </div>
+    </>
+  )}
+</div>
+
+<style>
+  .media-grid__single {
+    all: unset;
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .media-grid__single-img {
+    width: 140px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .media-grid__single-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .media-grid__title {
+    font-size: var(--text-body);
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .media-grid__desc {
+    font-size: var(--text-caption);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    line-height: 1.6;
+  }
+
+  .media-grid__row {
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .media-grid__row--mobile {
+    display: flex;
+  }
+
+  .media-grid__row--desktop {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .media-grid__row--mobile {
+      display: none;
+    }
+
+    .media-grid__row--desktop {
+      display: flex;
+    }
+  }
+
+  .media-grid__thumb {
+    all: unset;
+    position: relative;
+    display: block;
+    width: 84px;
+    height: 84px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .media-grid__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-grid__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-subtitle);
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+  .media-grid__thumb {
+    max-width: 100px;
+  }
+
+  .media-grid__row--desktop {
+    justify-content: flex-start;
+  }
+}
+</style>

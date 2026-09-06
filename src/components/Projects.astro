@@ -1,0 +1,49 @@
+---
+import type { ProjectItem } from '../data/types';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  items: ProjectItem[];
+}
+
+const { items } = Astro.props;
+
+const latestProject = [...items].sort(
+  (a, b) => b.builtDate.localeCompare(a.builtDate)
+)[0];
+---
+
+<section class="projects">
+  <div class="projects__heading-row">
+    <h2 class="projects__heading">Projects</h2>
+    <a href="/projects" class="projects__see-all">Tampilkan semua →</a>
+  </div>
+
+  <ProjectCard project={latestProject} />
+</section>
+
+<style>
+  .projects {
+    padding-inline: var(--space-xl);
+    padding-block: var(--space-3xl);
+    border-top: 1px solid var(--color-border-strong);
+  }
+
+  .projects__heading-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-xl);
+  }
+
+  .projects__heading {
+    font-size: var(--text-heading-sm);
+    font-weight: 500;
+  }
+
+  .projects__see-all {
+    font-size: var(--text-caption);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+</style>

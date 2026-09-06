@@ -1,0 +1,102 @@
+---
+import type { EducationItem as EducationItemType } from '../data/types';
+import MediaGrid from './MediaGrid.astro';
+import { resolveImageUrl } from '../lib/media';
+
+interface Props {
+  item: EducationItemType;
+}
+
+const { item } = Astro.props;
+---
+
+<div class="edu-item">
+  <img src={resolveImageUrl(item.institutionLogoUrl)} alt={item.institutionName} class="edu-item__logo" />
+
+  <div class="edu-item__content">
+    <h3 class="edu-item__institution">{item.institutionName}</h3>
+    <p class="edu-item__major">{item.major}</p>
+    <p class="edu-item__year">
+      {item.startYear} — {item.isCurrent ? 'Sekarang' : item.endYear}
+    </p>
+
+    {item.media.length > 0 && (
+      <div class="edu-item__media">
+        <MediaGrid media={item.media} />
+      </div>
+    )}
+
+    {item.skills.length > 0 && (
+      <ul class="edu-item__skills">
+        {item.skills.map((s) => <li>{s}</li>)}
+      </ul>
+    )}
+  </div>
+</div>
+
+<style>
+  .edu-item {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: flex-start;
+  }
+
+  .edu-item + .edu-item {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .edu-item__logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .edu-item__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .edu-item__institution {
+    font-size: var(--text-subtitle);
+    font-weight: 500;
+  }
+
+  .edu-item__major {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  .edu-item__year {
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+  }
+
+  .edu-item__media {
+    margin-top: var(--space-lg);
+  }
+
+  .edu-item__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-lg);
+  }
+
+  .edu-item__skills li {
+    font-size: var(--text-caption);
+    padding: 4px 10px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text-secondary);
+  }
+</style>
