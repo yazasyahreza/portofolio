@@ -2,7 +2,7 @@
 
 Website portofolio pribadi dengan tampilan minimalis hitam-putih, terinspirasi dari susunan halaman profil ala LinkedIn — identitas, pengalaman, proyek, dan pendidikan ditampilkan langsung tanpa hero section atau elemen landing page pada umumnya.
 
-Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **read-only** dari sistem dua-layanan: seluruh data (identitas, pengalaman, proyek, pendidikan) dikelola lewat [Portfolio CMS](#) yang terpisah, dan situs ini menampilkannya secara *server-rendered*.
+Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **read-only** dari sistem dua-layanan: seluruh data (identitas, pengalaman, proyek, pendidikan) dikelola lewat Portfolio CMS yang terpisah, dan situs ini menampilkannya secara *server-rendered*.
 
 ## Fitur
 
@@ -95,7 +95,3 @@ Di lingkungan production, proses ini dikelola sebagai service (misalnya melalui 
 - **Hierarki tanpa warna** — seluruh struktur visual dibangun dari tipografi (ukuran, weight, spacing) dan grayscale, bukan warna.
 - **Mobile-first** — setiap komponen dirancang dari tampilan mobile terlebih dahulu, baru diperluas ke layar yang lebih besar.
 - **Data-driven** — seluruh komponen bersifat *props-driven*; tidak ada konten yang di-hardcode di dalam markup.
-
-## Proyek Terkait
-
-- [Portfolio CMS](#) — layanan backend (Go) yang mengelola seluruh data portofolio ini.
