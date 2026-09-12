@@ -18,7 +18,7 @@ Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **rea
 
 ## Cara Kerja
 
-Situs ini berjalan dalam mode **SSR (Server-Side Rendering)**. Setiap kali ada permintaan halaman, Astro memanggil API milik [Portfolio CMS](#) (layanan backend terpisah berbasis Go) untuk mengambil data terbaru, lalu me-render HTML dari data tersebut — sehingga perubahan yang dilakukan lewat CMS langsung terlihat di publik tanpa proses build ulang.
+Situs ini berjalan dalam mode **SSR (Server-Side Rendering)**. Setiap kali ada permintaan halaman, Astro memanggil API milik Portofolio CMS (layanan backend terpisah berbasis Go) untuk mengambil data terbaru, lalu me-render HTML dari data tersebut — sehingga perubahan yang dilakukan lewat CMS langsung terlihat di publik tanpa proses build ulang.
 
 Gambar yang diunggah melalui CMS disalurkan (proxy) lewat Astro API route, sehingga backend CMS tidak perlu diekspos langsung ke publik.
 
@@ -32,7 +32,7 @@ Gambar yang diunggah melalui CMS disalurkan (proxy) lewat Astro API route, sehin
 ## Prasyarat
 
 - Node.js versi 22 ke atas
-- [Portfolio CMS](#) sudah berjalan dan dapat diakses (lokal maupun jaringan)
+- Portfolio CMS sudah berjalan dan dapat diakses (lokal maupun jaringan)
 
 ## Memulai
 
