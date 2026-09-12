@@ -3,6 +3,7 @@ Website portfolio pribadi bergaya profil LinkedIn, dibangun dengan Astro dalam m
 Live: https://syhrz.tail612d91.ts.net/
 
 Tech Stack:
+
 Framework: Astro (mode SSR, adapter Node)
 Bahasa: TypeScript
 Styling: CSS Murni
