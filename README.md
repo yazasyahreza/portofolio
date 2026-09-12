@@ -1,8 +1,8 @@
-# Portfolio
+# Portofolio
 
 Website portofolio pribadi dengan tampilan minimalis hitam-putih, terinspirasi dari susunan halaman profil ala LinkedIn — identitas, pengalaman, proyek, dan pendidikan ditampilkan langsung tanpa hero section atau elemen landing page pada umumnya.
 
-Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **read-only** dari sistem dua-layanan: seluruh data (identitas, pengalaman, proyek, pendidikan) dikelola lewat [Portfolio CMS](#) yang terpisah, dan situs ini menampilkannya secara *server-rendered*.
+Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **read-only** dari sistem dua-layanan: seluruh data (identitas, pengalaman, proyek, pendidikan) dikelola lewat Portfolio CMS yang terpisah, dan situs ini menampilkannya secara *server-rendered*.
 
 ## Fitur
 
@@ -18,7 +18,7 @@ Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **rea
 
 ## Cara Kerja
 
-Situs ini berjalan dalam mode **SSR (Server-Side Rendering)**. Setiap kali ada permintaan halaman, Astro memanggil API milik [Portfolio CMS](#) (layanan backend terpisah berbasis Go) untuk mengambil data terbaru, lalu me-render HTML dari data tersebut — sehingga perubahan yang dilakukan lewat CMS langsung terlihat di publik tanpa proses build ulang.
+Situs ini berjalan dalam mode **SSR (Server-Side Rendering)**. Setiap kali ada permintaan halaman, Astro memanggil API milik Portofolio CMS (layanan backend terpisah berbasis Go) untuk mengambil data terbaru, lalu me-render HTML dari data tersebut — sehingga perubahan yang dilakukan lewat CMS langsung terlihat di publik tanpa proses build ulang.
 
 Gambar yang diunggah melalui CMS disalurkan (proxy) lewat Astro API route, sehingga backend CMS tidak perlu diekspos langsung ke publik.
 
@@ -32,7 +32,7 @@ Gambar yang diunggah melalui CMS disalurkan (proxy) lewat Astro API route, sehin
 ## Prasyarat
 
 - Node.js versi 22 ke atas
-- [Portfolio CMS](#) sudah berjalan dan dapat diakses (lokal maupun jaringan)
+- Portfolio CMS sudah berjalan dan dapat diakses (lokal maupun jaringan)
 
 ## Memulai
 
@@ -95,7 +95,3 @@ Di lingkungan production, proses ini dikelola sebagai service (misalnya melalui 
 - **Hierarki tanpa warna** — seluruh struktur visual dibangun dari tipografi (ukuran, weight, spacing) dan grayscale, bukan warna.
 - **Mobile-first** — setiap komponen dirancang dari tampilan mobile terlebih dahulu, baru diperluas ke layar yang lebih besar.
 - **Data-driven** — seluruh komponen bersifat *props-driven*; tidak ada konten yang di-hardcode di dalam markup.
-
-## Proyek Terkait
-
-- [Portfolio CMS](#) — layanan backend (Go) yang mengelola seluruh data portofolio ini.
