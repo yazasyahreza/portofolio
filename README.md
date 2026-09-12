@@ -1,4 +1,4 @@
-# Portfolio
+# Portofolio
 
 Website portofolio pribadi dengan tampilan minimalis hitam-putih, terinspirasi dari susunan halaman profil ala LinkedIn — identitas, pengalaman, proyek, dan pendidikan ditampilkan langsung tanpa hero section atau elemen landing page pada umumnya.
 
