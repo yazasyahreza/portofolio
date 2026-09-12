@@ -16,8 +16,8 @@ const isSingle = media.length === 1;
 const desktopVisible = media.length > 4 ? media.slice(0, 3) : media;
 const desktopRemainder = media.length > 4 ? media.length - 3 : 0;
 
-const mobileVisible = media.length > 3 ? media.slice(0, 2) : media;
-const mobileRemainder = media.length > 3 ? media.length - 2 : 0;
+const mobileVisible = media.length > 2 ? media.slice(0, 2) : media;
+const mobileRemainder = media.length > 2 ? media.length - 2 : 0;
 
 const mediaJson = JSON.stringify(media);
 ---
@@ -25,12 +25,17 @@ const mediaJson = JSON.stringify(media);
 <div class="media-grid" data-media-group={mediaJson}>
   {isSingle ? (
     <button type="button" class="media-grid__single" data-media-open data-media-index="0">
-      <img src={resolveImageUrl(media[0].imageUrl)} alt={media[0].title} class="media-grid__single-img" />
-      <div class="media-grid__single-text">
-        <p class="media-grid__title">{media[0].title}</p>
-        <p class="media-grid__desc">{media[0].description}</p>
-      </div>
-    </button>
+  <img src={media[0].imageUrl} alt={media[0].title} class="media-grid__single-img" />
+  <div class="media-grid__single-text">
+    <p class="media-grid__title">{media[0].title}</p>
+    <p class="media-grid__desc">{media[0].description}</p>
+    {media[0].githubUrl && (
+      <a href={media[0].githubUrl} target="_blank" rel="noopener noreferrer" class="media-grid__github" onclick="event.stopPropagation()">
+        Lihat di GitHub →
+      </a>
+    )}
+  </div>
+</button>
   ) : (
     <>
       <div class="media-grid__row media-grid__row--desktop">
@@ -62,15 +67,15 @@ const mediaJson = JSON.stringify(media);
   .media-grid__single {
     all: unset;
     display: flex;
-    gap: var(--space-md);
-    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-sm);
     cursor: pointer;
     width: 100%;
   }
 
   .media-grid__single-img {
-    width: 140px;
-    height: 100px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 8px;
     border: 1px solid var(--color-border);
@@ -78,8 +83,20 @@ const mediaJson = JSON.stringify(media);
   }
 
   .media-grid__single-text {
-    flex: 1;
     min-width: 0;
+  }
+
+  @media (min-width: 480px) {
+    .media-grid__single {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .media-grid__single-img {
+      width: 140px;
+      height: 100px;
+      aspect-ratio: auto;
+    }
   }
 
   .media-grid__title {
@@ -158,5 +175,13 @@ const mediaJson = JSON.stringify(media);
   .media-grid__row--desktop {
     justify-content: flex-start;
   }
+}
+
+.media-grid__github {
+  display: inline-block;
+  margin-top: var(--space-xs);
+  font-size: var(--text-caption);
+  color: var(--color-text-primary);
+  text-decoration: underline;
 }
 </style>
