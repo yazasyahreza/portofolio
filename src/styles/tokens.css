@@ -1,10 +1,10 @@
 :root {
-  --text-caption: 13px;
-  --text-body: 16px;
-  --text-subtitle: 20px;
-  --text-heading-sm: 25px;
-  --text-heading-lg: 31px;
-  --text-display: 39px;
+  --text-caption: 12px;
+  --text-body: 15px;
+  --text-subtitle: 18px;
+  --text-heading-sm: 21px;
+  --text-heading-lg: 26px;
+  --text-display: 30px;
 
   --space-xs: 4px;
   --space-sm: 8px;
@@ -25,4 +25,15 @@
   --color-border-strong: #404040;
 
   --font-sans: "General Sans", sans-serif;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --text-caption: 13px;
+    --text-body: 16px;
+    --text-subtitle: 20px;
+    --text-heading-sm: 25px;
+    --text-heading-lg: 31px;
+    --text-display: 39px;
+  }
 }
