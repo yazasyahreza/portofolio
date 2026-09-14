@@ -13,6 +13,8 @@ const media = rawMedia.map((item) => ({
 }));
 const isSingle = media.length === 1;
 
+const isSingleDescLong = isSingle && media[0].description.length > 140;
+
 const desktopVisible = media.length > 4 ? media.slice(0, 3) : media;
 const desktopRemainder = media.length > 4 ? media.length - 3 : 0;
 
@@ -28,7 +30,10 @@ const mediaJson = JSON.stringify(media);
   <img src={media[0].imageUrl} alt={media[0].title} class="media-grid__single-img" />
   <div class="media-grid__single-text">
     <p class="media-grid__title">{media[0].title}</p>
-    <p class="media-grid__desc">{media[0].description}</p>
+      <p class="media-grid__desc">
+        {media[0].description}
+        {isSingleDescLong && <span class="media-grid__more">... lainnya</span>}
+      </p>
     {media[0].githubUrl && (
       <a href={media[0].githubUrl} target="_blank" rel="noopener noreferrer" class="media-grid__github" onclick="event.stopPropagation()">
         Lihat di GitHub →
@@ -110,6 +115,15 @@ const mediaJson = JSON.stringify(media);
     color: var(--color-text-secondary);
     margin-top: var(--space-xs);
     line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .media-grid__more {
+    color: var(--color-text-primary);
+    font-weight: 500;
   }
 
   .media-grid__row {
