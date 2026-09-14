@@ -6,7 +6,7 @@ Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **rea
 
 ## Fitur
 
-- **Identity** — profil ringkas: foto, cover, bio, ringkasan "Who am I?", dan badge tech stack.
+- **Identity** — profil ringkas: foto, cover, ringkasan "Who am I?", dan badge tech stack.
 - **Projects** — daftar proyek dengan pratinjau proyek terbaru di halaman utama, dan halaman `/projects` untuk melihat semua.
 - **Experience** — riwayat pekerjaan dengan deskripsi yang bisa di-*expand* (read more) dan galeri media pendukung.
 - **Education** — riwayat pendidikan dengan pola tampilan yang konsisten dengan Experience.

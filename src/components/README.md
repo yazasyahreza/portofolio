@@ -4,7 +4,7 @@ Dokumen ini menjelaskan fungsi masing-masing komponen, serta relasinya satu sama
 
 ## `Identity.astro`
 
-Section pertama yang tampil di halaman utama. Menampilkan cover (lewat `Cover.astro`), foto profil (overlapping di atas cover), nama, title, lokasi, bio singkat, ringkasan "Who am I?", dan badge tech stack (ikon dari Simple Icons). Tidak memiliki item berulang, sehingga tidak dipecah menjadi komponen container/item.
+Section pertama yang tampil di halaman utama. Menampilkan cover (lewat `Cover.astro`), foto profil (overlapping di atas cover), nama, title, lokasi, ringkasan "Who am I?", dan badge tech stack (ikon dari Simple Icons). Tidak memiliki item berulang, sehingga tidak dipecah menjadi komponen container/item.
 
 ## `Cover.astro`
 
