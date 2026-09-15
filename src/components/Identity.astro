@@ -29,6 +29,7 @@ const { data } = Astro.props;
     <p class="identity__about-title">Who am I?</p>
     <p class="identity__about-text">{data.aboutText}</p>
 
+    <p class="identity__skills-label">My Programming Language:</p>
     <div class="identity__skills">
       {data.skills.map((skill) => (
         <div class="identity__skill" title={skill.name}>
@@ -108,7 +109,7 @@ const { data } = Astro.props;
   .identity__skills {
     display: flex;
     gap: var(--space-sm);
-    margin-top: var(--space-xl);
+    margin-top: var(--space-lg);
   }
 
   .identity__skill {
@@ -124,6 +125,14 @@ const { data } = Astro.props;
   .identity__skill img {
     width: 18px;
     height: 18px;
+  }
+
+  .identity__skills-label {
+    font-family: 'Caveat', cursive;
+    font-size: 17px;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xl);
+    margin-bottom: -4px;
   }
 
   @media (min-width: 768px) {
