@@ -10,13 +10,13 @@ Berisi aset statis bawaan scaffold Astro (misalnya ikon default). Folder ini **b
 
 Seluruh komponen tampilan (`.astro`), murni bertugas menerima data lewat `Astro.props` dan merender markup + style-nya sendiri. Komponen di sini tidak pernah mengambil data secara langsung (kecuali `Footer.astro`, yang sengaja mengambil data sendiri karena sifatnya *single-instance*, bukan reusable).
 
-Beberapa komponen mengikuti pola *container/item* — satu komponen bertugas sebagai pembungkus section (`Experience.astro`, `Education.astro`), satu lagi untuk item yang berulang di dalamnya (`ExperienceItem.astro`, `EducationItem.astro`).
+Komponen inti saat ini: `Identity.astro`, `Projects.astro` (pembungkus daftar proyek di halaman utama), `ProjectCard.astro` (item proyek, dipakai di halaman utama maupun sebagai dasar halaman detail), `Cover.astro`, dan `Footer.astro`.
 
-Komponen kecil yang dipakai lintas section (`MediaGrid.astro`, `ReadMore.astro`, `Cover.astro`) sengaja tidak dikelompokkan dalam subfolder, karena jumlahnya masih proporsional untuk struktur flat.
+> **Perlu diperiksa:** `MediaGrid.astro` berpotensi jadi kode mati sejak `Experience`/`Education` dan komponen item-nya dihapus (folder ini dulu satu-satunya pemakainya). Belum dipastikan apakah file ini sudah dihapus atau masih tertinggal — kalau masih ada dan tidak dipakai di manapun (termasuk halaman detail proyek), aman dihapus, tapi cek dulu apakah `BaseLayout.astro` masih punya markup/script lightbox yang bergantung padanya sebelum menghapus.
 
 ## `data/`
 
-- `types.ts` — definisi seluruh bentuk data (`IdentityData`, `ExperienceItem`, `ProjectItem`, `EducationItem`, `MediaItem`, dst). Ini "kamus" tunggal yang menjadi rujukan bentuk data di seluruh project.
+- `types.ts` — definisi seluruh bentuk data (`IdentityData`, `ProjectItem`, `MediaItem`, dst). Ini "kamus" tunggal yang menjadi rujukan bentuk data di seluruh project. `ProjectItem` sekarang juga mencakup `duration` dan `story` (cerita lengkap pengerjaan, ditampilkan di halaman detail).
 - `store.ts` — satu-satunya titik yang mengambil data dari Portfolio CMS (lewat `fetch` ke `CMS_API_URL`). Semua halaman dan komponen yang butuh data memanggil `getContent()` dari file ini — tidak ada `fetch` ke CMS yang ditulis langsung di komponen manapun.
 
 ## `layouts/`
@@ -33,8 +33,8 @@ Fungsi bantu (*helper*) murni yang dipakai berulang lintas komponen, di luar kat
 
 Routing berbasis file bawaan Astro — tiap file di sini otomatis menjadi URL.
 
-- `index.astro` — halaman utama, merangkai seluruh section (Identity, Projects, Experience, Education).
-- `projects.astro` — halaman `/projects`, menampilkan seluruh daftar proyek.
+- `index.astro` — halaman utama, merangkai section Identity dan Projects (seluruh proyek ditampilkan langsung di sini, tanpa halaman daftar terpisah lagi).
+- `projects/[slug].astro` — halaman detail satu proyek, diakses lewat slug yang di-generate otomatis dari judul (`/projects/nama-proyek`). Menampilkan cerita lengkap (`story`), durasi pengerjaan, tech stack, dan tautan GitHub.
 - `api/image/[...path].ts` — API route yang berfungsi sebagai *proxy* gambar dari Portfolio CMS ke browser publik.
 
 ## `styles/`

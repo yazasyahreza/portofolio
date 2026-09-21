@@ -1,16 +1,13 @@
 # Portofolio
 
-Website portofolio pribadi dengan tampilan minimalis hitam-putih, terinspirasi dari susunan halaman profil ala LinkedIn — identitas, pengalaman, proyek, dan pendidikan ditampilkan langsung tanpa hero section atau elemen landing page pada umumnya.
+Website portofolio pribadi dengan tampilan minimalis hitam-putih, terinspirasi dari susunan halaman profil ala LinkedIn — identitas dan proyek ditampilkan langsung tanpa hero section atau elemen landing page pada umumnya.
 
-Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **read-only** dari sistem dua-layanan: seluruh data (identitas, pengalaman, proyek, pendidikan) dikelola lewat Portfolio CMS yang terpisah, dan situs ini menampilkannya secara *server-rendered*.
+Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **read-only** dari sistem dua-layanan: seluruh data (identitas, proyek) dikelola lewat Portfolio CMS yang terpisah, dan situs ini menampilkannya secara *server-rendered*.
 
 ## Fitur
 
-- **Identity** — profil ringkas: foto, cover, ringkasan "Who am I?", dan badge tech stack.
-- **Projects** — daftar proyek dengan pratinjau proyek terbaru di halaman utama, dan halaman `/projects` untuk melihat semua.
-- **Experience** — riwayat pekerjaan dengan deskripsi yang bisa di-*expand* (read more) dan galeri media pendukung.
-- **Education** — riwayat pendidikan dengan pola tampilan yang konsisten dengan Experience.
-- **Media Gallery & Lightbox** — galeri gambar responsif (grid berbeda untuk mobile/desktop) dengan pratinjau layar penuh, navigasi antar-media, dan tautan GitHub otomatis untuk media bertipe proyek.
+- **Identity** — profil ringkas: foto, cover, dan ringkasan "Who am I?".
+- **Projects** — seluruh proyek ditampilkan langsung di halaman utama, masing-masing dengan tombol menuju halaman detail (`/projects/[slug]`) berisi cerita lengkap pengerjaan, durasi, tech stack, dan tautan GitHub.
 - **Footer "Connect Me"** — tautan sosial media, dirender terpisah dari Identity untuk menjaga privasi tautan personal.
 - **Desain responsif mobile-first** — seluruh komponen dibangun dari breakpoint mobile terlebih dahulu, baru diperluas ke desktop.
 - **Dark theme berbasis design token** — seluruh warna, jarak, dan skala tipografi dikendalikan lewat CSS custom properties terpusat.
@@ -20,13 +17,15 @@ Dibangun dengan [Astro](https://astro.build), dan dirancang sebagai bagian **rea
 
 Situs ini berjalan dalam mode **SSR (Server-Side Rendering)**. Setiap kali ada permintaan halaman, Astro memanggil API milik Portofolio CMS (layanan backend terpisah berbasis Go) untuk mengambil data terbaru, lalu me-render HTML dari data tersebut — sehingga perubahan yang dilakukan lewat CMS langsung terlihat di publik tanpa proses build ulang.
 
+Halaman detail proyek (`/projects/[slug]`) menggunakan *dynamic route* Astro, dengan slug yang di-generate otomatis dari judul proyek (misalnya "Personal Finance Tracker" menjadi `/projects/personal-finance-tracker`) — tidak memerlukan field ID manual di data.
+
 Gambar yang diunggah melalui CMS disalurkan (proxy) lewat Astro API route, sehingga backend CMS tidak perlu diekspos langsung ke publik.
 
 ## Tech Stack
 
 - [Astro](https://astro.build) (mode `server`, adapter [`@astrojs/node`](https://docs.astro.build/en/guides/integrations-guide/node/))
 - HTML, CSS murni (tanpa framework UI), dengan sistem design token berbasis CSS custom properties
-- Vanilla JavaScript untuk interaktivitas (lightbox, read more, transisi halaman)
+- Vanilla JavaScript untuk interaktivitas (transisi halaman)
 - TypeScript untuk pendefinisian tipe data
 
 ## Prasyarat
@@ -70,7 +69,7 @@ Gambar yang diunggah melalui CMS disalurkan (proxy) lewat Astro API route, sehin
 
 | Variabel | Keterangan |
 |---|---|
-| `CMS_API_URL` | Base URL API Portfolio CMS yang menyediakan data (identity, projects, experience, education) |
+| `CMS_API_URL` | Base URL API Portfolio CMS yang menyediakan data (identity, projects) |
 
 ## Deployment
 
