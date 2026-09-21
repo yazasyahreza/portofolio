@@ -8,18 +8,21 @@ interface Props {
 
 const { items } = Astro.props;
 
-const latestProject = [...items].sort(
+const sortedItems = [...items].sort(
   (a, b) => b.builtDate.localeCompare(a.builtDate)
-)[0];
+);
 ---
 
 <section class="projects">
-  <div class="projects__heading-row">
-    <h2 class="projects__heading">Projects</h2>
-    <a href="/projects" class="projects__see-all">Tampilkan semua →</a>
-  </div>
+  <h2 class="projects__heading">Projects</h2>
 
-  <ProjectCard project={latestProject} />
+  <div class="projects__list">
+    {sortedItems.map((project) => (
+      <div class="projects__item">
+        <ProjectCard project={project} />
+      </div>
+    ))}
+  </div>
 </section>
 
 <style>
@@ -29,21 +32,20 @@ const latestProject = [...items].sort(
     border-top: 1px solid var(--color-border-strong);
   }
 
-  .projects__heading-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: var(--space-xl);
-  }
-
   .projects__heading {
     font-size: var(--text-heading-sm);
     font-weight: 500;
+    margin-bottom: var(--space-xl);
   }
 
-  .projects__see-all {
-    font-size: var(--text-caption);
-    color: var(--color-text-secondary);
-    text-decoration: none;
+  .projects__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .projects__item + .projects__item {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-3xl);
+    border-top: 1px solid var(--color-border);
   }
 </style>

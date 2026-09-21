@@ -1,15 +1,11 @@
 import type {
   IdentityData,
-  ExperienceItem,
   ProjectItem,
-  EducationItem,
 } from "./types";
 
 interface ContentData {
   identity: IdentityData;
-  experiences: ExperienceItem[];
   projects: ProjectItem[];
-  education: EducationItem[];
 }
 
 const CMS_API_URL = import.meta.env.CMS_API_URL || "http://localhost:8080";

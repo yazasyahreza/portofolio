@@ -1,7 +1,7 @@
 ---
 import type { ProjectItem } from '../data/types';
-import ReadMore from './ReadMore.astro';
 import { resolveImageUrl } from '../lib/media';
+import { slugify } from '../lib/slug';
 
 interface Props {
   project: ProjectItem;
@@ -19,20 +19,22 @@ function formatDate(dateStr: string) {
 <div class="project-card">
   <img src={resolveImageUrl(project.imageUrl)} alt={project.title} class="project-card__image" />
 
-  <div class="project-card__body">   
+  <div class="project-card__body">
     <h3 class="project-card__title">{project.title}</h3>
     <p class="project-card__date">{formatDate(project.builtDate)}</p>
-    <div class="project-card__description">
-      <ReadMore text={project.description} />
-    </div>
+    <p class="project-card__description">{project.description}</p>
     <ul class="project-card__skills">
       {project.techStack.map((t) => <li>{t}</li>)}
     </ul>
-    
-    
-    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" class="project-card__github">
-      Lihat di GitHub →
-    </a>
+
+    <div class="project-card__links">
+      <a href={`/projects/${slugify(project.title)}`} class="project-card__detail">
+        Lihat Detail →
+      </a>
+      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" class="project-card__github">
+        Lihat di GitHub →
+      </a>
+    </div>
   </div>
 </div>
 
@@ -63,6 +65,7 @@ function formatDate(dateStr: string) {
 
   .project-card__description {
     margin-top: var(--space-md);
+    color: var(--color-text-secondary);
   }
 
   .project-card__skills {
@@ -82,9 +85,20 @@ function formatDate(dateStr: string) {
     color: var(--color-text-secondary);
   }
 
-  .project-card__github {
-    display: inline-block;
+  .project-card__links {
+    display: flex;
+    gap: var(--space-lg);
     margin-top: var(--space-md);
+  }
+
+  .project-card__detail {
+    font-size: var(--text-caption);
+    color: var(--color-text-primary);
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
+  .project-card__github {
     font-size: var(--text-caption);
     color: var(--color-text-primary);
     text-decoration: underline;

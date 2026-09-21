@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { data } = Astro.props;
+const aboutParagraphs = data.aboutText.split(/\n{2,}/);
 ---
 
 <section class="identity">
@@ -27,7 +28,11 @@ const { data } = Astro.props;
       {data.location}
     </p>
     <p class="identity__about-title">Who am I?</p>
-    <p class="identity__about-text">{data.aboutText}</p>
+    <div class="identity__about-text">
+      {aboutParagraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+    </div>
 
     <p class="identity__skills-label">My Programming Language:</p>
     <div class="identity__skills">
@@ -104,6 +109,10 @@ const { data } = Astro.props;
     font-size: var(--text-body);
     color: var(--color-text-muted);
     line-height: 1.7;
+  }
+
+  .identity__about-text p + p {
+    margin-top: var(--space-sm);
   }
 
   .identity__skills {

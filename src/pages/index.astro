@@ -2,16 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Identity from '../components/Identity.astro';
 import Projects from '../components/Projects.astro';
-import Experience from '../components/Experience.astro';
-import Education from '../components/Education.astro';
 import { getContent } from '../data/store';
 
-const { identity, experiences, projects, education } = await getContent();
+const { identity, projects } = await getContent();
 ---
 
 <BaseLayout title={`${identity.name} — Portfolio`}>
   <Identity data={identity} />
   <Projects items={projects} />
-  <Experience items={experiences} />
-  <Education items={education} />
 </BaseLayout>

@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getContent } from '../../data/store';
+import { resolveImageUrl } from '../../lib/media';
+import { slugify } from '../../lib/slug';
+
+const { slug } = Astro.params;
+const { identity, projects } = await getContent();
+
+const project = projects.find((p) => slugify(p.title) === slug);
+
+if (!project) {
+  return new Response('Project tidak ditemukan', { status: 404 });
+}
+
+function formatFullDate(dateStr: string) {
+  const [year, month, day] = dateStr.split('-');
+  const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  const monthName = months[parseInt(month, 10) - 1] ?? '';
+  return day ? `${parseInt(day, 10)} ${monthName} ${year}` : `${monthName} ${year}`;
+}
+---
+
+<BaseLayout title={`${project.title} — ${identity.name}`}>
+  <div class="detail">
+    <a href="/" class="detail__back">← Kembali</a>
+
+    <img src={resolveImageUrl(project.imageUrl)} alt={project.title} class="detail__cover" />
+
+    <div class="detail__body">
+      <h1 class="detail__title">{project.title}</h1>
+
+      <div class="detail__meta">
+        <span>{formatFullDate(project.builtDate)}</span>
+        <span class="detail__meta-dot">•</span>
+        <span>Dikerjakan selama {project.duration}</span>
+      </div>
+
+      {project.story.split(/\n{2,}/).map((paragraph) => (
+        <p class="detail__story">{paragraph}</p>
+      ))}
+
+      <ul class="detail__skills">
+        {project.techStack.map((t) => <li>{t}</li>)}
+      </ul>
+
+      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" class="detail__github">
+        Lihat di GitHub →
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .detail {
+    padding: var(--space-xl);
+  }
+
+  .detail__back {
+    display: inline-block;
+    font-size: var(--text-caption);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    margin-bottom: var(--space-lg);
+  }
+
+  .detail__cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    display: block;
+  }
+
+  .detail__body {
+    margin-top: var(--space-xl);
+  }
+
+  .detail__title {
+    font-size: var(--text-heading-lg);
+    font-weight: 500;
+  }
+
+  .detail__meta {
+    display: flex;
+    gap: var(--space-sm);
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+    margin-top: var(--space-sm);
+  }
+
+  .detail__meta-dot {
+    color: var(--color-text-muted);
+  }
+
+  .detail__story {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-top: var(--space-lg);
+  }
+
+  .detail__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-lg);
+  }
+
+  .detail__skills li {
+    font-size: var(--text-caption);
+    padding: 4px 10px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text-secondary);
+  }
+
+  .detail__github {
+    display: inline-block;
+    margin-top: var(--space-lg);
+    font-size: var(--text-caption);
+    color: var(--color-text-primary);
+    text-decoration: underline;
+  }
+</style>

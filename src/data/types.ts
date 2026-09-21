@@ -26,35 +26,13 @@ export interface MediaItem {
   githubUrl?: string;
 }
 
-export interface ExperienceItem {
-  position: string;
-  organization: string;
-  location: string;
-  logoUrl: string;
-  startDate: string;
-  endDate: string | null;
-  isCurrent: boolean;
-  description: string;
-  skills: string[];
-  media: MediaItem[];
-}
-
 export interface ProjectItem {
   title: string;
   description: string;
   builtDate: string;
+  duration: string;
+  story: string;
   techStack: string[];
   githubUrl: string;
   imageUrl: string;
-}
-
-export interface EducationItem {
-  institutionName: string;
-  institutionLogoUrl: string;
-  major: string;
-  startYear: string;
-  endYear: string | null;
-  isCurrent: boolean;
-  media: MediaItem[];
-  skills: string[];
 }
