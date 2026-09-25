@@ -64,8 +64,9 @@ const { title } = Astro.props;
 <style>
   .container {
     width: 100%;
-    padding-inline: var(--space-lg);
+    padding-inline: var(--space-sm);
     background: var(--color-bg);
+    min-height: 100dvh
   }
 
   .lightbox {
@@ -199,6 +200,7 @@ const { title } = Astro.props;
       border-radius: 5px;
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      min-height: auto;
     }
     
     .lightbox__body {

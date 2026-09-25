@@ -4,8 +4,15 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   margin: 0;
+  overflow-x: hidden;
+  width: 100%;
   font-family: var(--font-sans);
   font-size: var(--text-body);
   color: var(--color-text-primary);
@@ -15,6 +22,12 @@ body {
 
 h1, h2, h3, p {
   margin: 0;
+}
+
+img, svg, video, picture {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .container {

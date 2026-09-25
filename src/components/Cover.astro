@@ -19,8 +19,9 @@ const { src } = Astro.props;
 
   @media (max-width: 768px) {
     .cover {
-      width: calc(100% + 32px);
-      margin-left: -16px;
+      width: calc(100% + 2 * var(--space-lg));
+      max-width: none;
+      margin-left: calc(-1 * var(--space-lg));
     }
   }
 

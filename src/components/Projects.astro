@@ -11,10 +11,43 @@ const { items } = Astro.props;
 const sortedItems = [...items].sort(
   (a, b) => b.builtDate.localeCompare(a.builtDate)
 );
+
+const techCount = new Map<string, number>();
+for (const item of sortedItems) {
+  for (const tech of item.techStack) {
+    techCount.set(tech, (techCount.get(tech) ?? 0) + 1);
+  }
+}
+const topTech = [...techCount.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 3)
+  .map(([name]) => name);
 ---
 
 <section class="projects">
-  <h2 class="projects__heading">Projects</h2>
+  <div class="projects__header">
+    <h2 class="projects__heading">Projects</h2>
+    <p class="projects__intro">
+      A collection of projects I've built to learn, experiment, and solve real-world problems — from small experiments to applications that are actually being used.
+    </p>
+    <div class="projects__meta">
+  {topTech.length > 0 && (
+    <span class="projects__stat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="projects__stat-icon">
+        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      Tech I use most: <strong>{topTech.join(', ')}</strong>
+    </span>
+  )}
+  <span class="projects__stat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="projects__stat-icon">
+      <rect x="3" y="7" width="18" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+      <path d="M3 7l2-4h14l2 4" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <strong>{sortedItems.length}</strong> Project{sortedItems.length !== 1 ? 's' : ''} completed
+  </span>
+</div>
+  </div>
 
   <div class="projects__list">
     {sortedItems.map((project) => (
@@ -27,16 +60,53 @@ const sortedItems = [...items].sort(
 
 <style>
   .projects {
-    padding-inline: var(--space-xl);
+    padding-inline: var(--space-lg);
     padding-block: var(--space-3xl);
     border-top: 1px solid var(--color-border-strong);
   }
 
+  .projects__header {
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
   .projects__heading {
     font-size: var(--text-heading-sm);
     font-weight: 500;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-sm);
   }
+
+  .projects__intro {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  .projects__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+
+.projects__stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.projects__stat strong {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.projects__stat-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}  
 
   .projects__list {
     display: flex;
@@ -47,5 +117,11 @@ const sortedItems = [...items].sort(
     margin-top: var(--space-3xl);
     padding-top: var(--space-3xl);
     border-top: 1px solid var(--color-border);
+  }
+  
+  @media (min-width: 768px) {
+    .projects {
+      padding-inline: var(--space-xl);
+    }
   }
 </style>
